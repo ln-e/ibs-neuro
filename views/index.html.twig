@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="">
+        <h1>Обучение</h1>
+        <table>
+            <tr>
+                <td>totalExamples</td>
+                <td>{{ classifier.classifier.totalExamples - 1 }}</td>
+            </tr>
+        </table>
+        <form action="/train" method="post" enctype="multipart/form-data">
+            <input type="file" name="trainFile">
+            <button type=submit>Обучить</button>
+        </form>
+    </section>
+    <section class="">
+        <h1>Очистка словаря</h1>
+        <a href="/clear">Стереть словарь</a>
+    </section>
+    <section class="">
+        <h1>Классифицировать</h1>
+        <form action="/" method="post">
+            <label>Тема письма</label>
+            <textarea name="subject" size=2>{{ subject }}</textarea>
+            <br>
+            <label>Текст письма</label>
+            <textarea name="body" size=10>{{ body }}</textarea>
+            <button type=submit>Классифицировать</button>
+        </form>
+        {% for classificationResult in classificationResults %}
+            label: {{ classificationResult.label }}, value: {{ classificationResult.value }} <br>
+        {% endfor %}
+    </section>
+{% endblock body %}
